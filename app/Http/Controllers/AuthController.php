@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -18,6 +20,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+        // Mail::to('recipient@example.com')->send(new WelcomeEmail());
+        // return "Email sent successfully!";
     }
 
     public function login(Request $request)
@@ -28,6 +32,8 @@ class AuthController extends Controller
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        Mail::to('hello@example.com')->send(new WelcomeEmail());
+
         $user = Auth::user();
 
         $token = $user->createToken('token')->plainTextToken;
@@ -35,7 +41,8 @@ class AuthController extends Controller
         $cookie = cookie('Token', $token, 2); // 1 day
 
         return response([
-            'message' => $token
+            'message' => $token,
+            'status' => 'Email Sended'
         ])->withCookie($cookie);
     }
 
@@ -51,5 +58,13 @@ class AuthController extends Controller
         return response([
             'message' => 'Success'
         ])->withCookie($cookie);
+    }
+
+    public function sendWelcomeEmail()
+    {
+        Mail::to('hello@example.com')->send(new WelcomeEmail());
+        return response([
+            'message' => 'Email Sended'
+        ]);
     }
 }

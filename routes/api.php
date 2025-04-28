@@ -46,6 +46,9 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::get('/products', [ProductController::class, 'index']);
 
+Route::get('/send', [AuthController::class, 'sendWelcomeEmail']);
+
+
 
 
 
