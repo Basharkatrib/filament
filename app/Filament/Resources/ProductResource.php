@@ -16,9 +16,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Resources\Concerns\Translatable;
+use Filament\Actions;
 
 class ProductResource extends Resource
 {
+    use Translatable;
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -60,6 +63,14 @@ class ProductResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\LocaleSwitcher::make(),
+            
         ];
     }
 

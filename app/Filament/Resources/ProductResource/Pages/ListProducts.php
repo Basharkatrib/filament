@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use ListRecords\Concerns\Translatable;
 
 class ListProducts extends ListRecords
 {
@@ -14,6 +15,7 @@ class ListProducts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\LocaleSwitcher::make(),
         ];
     }
 }
